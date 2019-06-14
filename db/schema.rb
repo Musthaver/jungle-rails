@@ -61,7 +61,6 @@ ActiveRecord::Schema.define(version: 20190613225135) do
     t.integer  "user_id"
     t.text     "description"
     t.integer  "rating"
-    t.string   "timestamps"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end

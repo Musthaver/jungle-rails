@@ -132,5 +132,37 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+##USERS
+
+puts "Re-creating Users ..."
+
+User.destroy_all
+
+(1..10).each do 
+  User.create!({
+  first_name: Faker::Name.first_name,
+  last_name: Faker::Name.last_name,
+  email: Faker::Internet.email,
+  password: Faker::Internet.password(8),
+})
+end
+
+##REVIEWS
+
+puts "Re-creating Reviews ..."
+
+Review.destroy_all
+
+product_ids = Product.all.pluck(:id)
+user_ids = User.all.pluck(:id)
+
+(1..20).each do 
+Review.create!({
+  product_id: product_ids.sample,
+  user_id: user_ids.sample,
+  description: Faker::Hipster.sentence,
+  rating: Faker::Number.between(1, 5),
+})
+end
 
 puts "DONE!"

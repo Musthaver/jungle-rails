@@ -1,0 +1,21 @@
+                                      Table "public.products"
+   Column    |            Type             |                       Modifiers                       
+-------------+-----------------------------+-------------------------------------------------------
+ id          | integer                     | not null default nextval('products_id_seq'::regclass)
+ name        | character varying           | 
+ description | text                        | 
+ image       | character varying           | 
+ price_cents | integer                     | 
+ quantity    | integer                     | 
+ created_at  | timestamp without time zone | not null
+ updated_at  | timestamp without time zone | not null
+ category_id | integer                     | 
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+    "index_products_on_category_id" btree (category_id)
+Foreign-key constraints:
+    "fk_rails_fb915499a4" FOREIGN KEY (category_id) REFERENCES categories(id)
+Referenced by:
+    TABLE "line_items" CONSTRAINT "fk_rails_11e15d5c6b" FOREIGN KEY (product_id) REFERENCES products(id)
+    TABLE "reviews" CONSTRAINT "fk_rails_bedd9094d4" FOREIGN KEY (product_id) REFERENCES products(id)
+
