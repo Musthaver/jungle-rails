@@ -25,15 +25,21 @@
         </dl>
       </div>
     </div>
+    </article>
 
-
+    <article class="product-ratings"
     <div class="row">
       <% @product.reviews.each do |review|%>
       
         <div class="col-sm-4">
-          <dl class="dl-horizontal">
-            <dt>Rating :</dt> 
-            <dd><%= review.rating %></dd>
+          <dl>
+            <dt>Rating: </dt> 
+            <% review.rating.to_i.times do  %>
+              <span class="glyphicon glyphicon-star"></span>
+             <% end %>
+             <% (5 - review.rating.to_i).times do %>
+              <span class="glyphicon glyphicon-star-empty"></span>
+             <% end %>
           </dl>
         </div>  
 
@@ -46,9 +52,9 @@
         
         <% end %>
       </div>
-
+<article>
     
 
-  </article>
+  
 
 </section>
