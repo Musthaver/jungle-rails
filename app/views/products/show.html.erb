@@ -28,19 +28,25 @@
   </article>
 
   <article class="product-ratings">
+  <%if current_user%>
+  <h4>Add a Rating</h4>
     <%= form_for [@product, @review] do |f| %>
       <%= f.label :rating %>
-      <%= select_tag(:rating, options_for_select([[1],[2],[3],[4],[5]])) %>
-      Description: <%= f.text_field :description %>
+      <%= f.select :rating, [1,2,3,4,5] %>
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+      <%= f.submit 'Add Rating', class: 'btn btn-primary' %>
+    <%end%>
     <%end%>
   </article>
 
   <article class="product-ratings">
+  <h4>Reviews</h4>
     <div class="row">
-      <% @product.reviews.each do |review|%>
+      <% @product.reviews.reverse_each do |review|%>
       
         <div class="col-sm-4">
-          <dl>
+          <dl class="dl-horizontal">
             <dt>Rating: </dt> 
             <% review.rating.to_i.times do  %>
               <span class="glyphicon glyphicon-star"></span>
@@ -55,6 +61,9 @@
           <dl class="dl-horizontal">
             <dt>Description</dt>
             <dd><%= review.description %></dd>
+            <% if review.user_id == current_user %>
+            <%link_to fa_icon('trash'), [:product], class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
+            <%end%>
           </dl>
         </div>  
         
