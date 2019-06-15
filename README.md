@@ -28,5 +28,16 @@ More information in their docs: <https://stripe.com/docs/testing#cards>
 * Stripe
 
 
-##Screenshots
+## Screenshots
+
+!["Home"](docs/Home.png)
+!["Order Confirmation"](docs/OrderConfirmationPage.png)
+!["Add and Delete Ratings"](docs/AddAndDeleteRatings.png)
+!["Unique email validation"](docs/EmailUniquenessValidation.png)
+
+
+
+
+
+
 
