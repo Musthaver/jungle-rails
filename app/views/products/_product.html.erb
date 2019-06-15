@@ -8,6 +8,13 @@
   <p class="description">
     <%= product.description %>
   </p>
+  <p>Average rating: </p> 
+  <% product.reviews.average(:rating).to_i.times do  %>
+    <span class="glyphicon glyphicon-star"></span>
+   <% end %>
+   <% (5 - product.reviews.average(:rating).to_i).times do %>
+    <span class="glyphicon glyphicon-star-empty"></span>
+   <% end %>
   <footer class="actions">
   <% if product.quantity != 0 %>
       <%= button_to add_item_cart_path(product_id: product.id), class: 'btn btn-primary' , method: :post do %>

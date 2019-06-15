@@ -69,7 +69,7 @@
         <div class="col-sm-8">
             <dt>Description</dt>
             <dd><%= review.description %></dd>
-            <% if review.user_id == current_user.id %>
+            <% if current_user && review.user_id == current_user.id %>
             <dd><%=link_to fa_icon('trash'), product_review_path(@product.id, review.id), class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %></dd>
             <%end%>
         </div>  
