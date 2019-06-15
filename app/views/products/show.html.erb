@@ -31,6 +31,17 @@
   <%if current_user%>
   <h4>Add a Rating</h4>
     <%= form_for [@product, @review] do |f| %>
+      <% if @review.errors.any? %>
+      <div class="alert alert-danger">
+        <strong>The following <%= pluralize(@review.errors.count, "error") %> prevented your registration:</strong>
+        <ul>
+          <% @review.errors.full_messages.each do |error| %>
+            <li><%= error %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
       <%= f.label :rating %>
       <%= f.select :rating, [1,2,3,4,5] %>
       <%= f.label :description %>
@@ -46,7 +57,6 @@
       <% @product.reviews.reverse_each do |review|%>
       
         <div class="col-sm-4">
-          <dl class="dl-horizontal">
             <dt>Rating: </dt> 
             <% review.rating.to_i.times do  %>
               <span class="glyphicon glyphicon-star"></span>
@@ -54,17 +64,14 @@
              <% (5 - review.rating.to_i).times do %>
               <span class="glyphicon glyphicon-star-empty"></span>
              <% end %>
-          </dl>
         </div>  
 
         <div class="col-sm-8">
-          <dl class="dl-horizontal">
             <dt>Description</dt>
             <dd><%= review.description %></dd>
-            <% if review.user_id == current_user %>
-            <%link_to fa_icon('trash'), [:product], class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
+            <% if review.user_id == current_user.id %>
+            <dd><%=link_to fa_icon('trash'), product_review_path(@product.id, review.id), class: 'btn btn-sm btn-danger', method: :delete, data: { confirm: "Are you sure?" } %></dd>
             <%end%>
-          </dl>
         </div>  
         
         <% end %>
