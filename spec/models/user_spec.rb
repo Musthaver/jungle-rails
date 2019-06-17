@@ -9,7 +9,7 @@ RSpec.describe User, type: :model do
     let(:password_confirmation) {'password'}
 
     let(:user) {User.new(first_name: first_name, last_name: last_name, email: email, password: password, password_confirmation: password_confirmation)}
-    let(:user2) {User.new(first_name: first_name, last_name: last_name, email: 'TEST@TEST.COM', password: password, password_confirmation: password_confirmation)}
+    let(:user2) {User.new(first_name: first_name, last_name: last_name, email: 'TEST@TEST.com', password: password, password_confirmation: password_confirmation)}
     let(:user3) {User.new(first_name: first_name, last_name: last_name, email: 'test2@test.com', password: password, password_confirmation: password_confirmation)}
 
     context 'when all the proper attributes are provided' do
@@ -110,18 +110,19 @@ RSpec.describe User, type: :model do
 
     end
 
-    # context 'when a duplicate email is provided' do
+    context 'when a duplicate email is provided' do
 
-    #   it 'should not be valid' do 
-    #     expect(user2).to_not be_valid
-    #   end
+      it 'should not be valid' do 
+        user.save
+        expect(user2).to_not be_valid
+      end
   
-    #   it 'reports a validation error on the email' do
-    #     user.save
-    #     user2.valid?
-    #     expect(uder2.errors.full_messages).to include " has already been taken"
-    #   end
-    # end
+      it 'reports a validation error on the email' do
+        user.save
+        user2.valid?
+        expect(user2.errors.full_messages).to include "Email has already been taken"
+      end
+    end
   
 
   end
