@@ -135,15 +135,36 @@ RSpec.describe User, type: :model do
       end
     end
   
+  end
+
+
+  describe '.authenticate_with_credentials' do
+
+    context 'when email and password match a record' do
+      it 'should be valid' do
+        user = User.create(first_name: 'John', last_name: 'Snow', email: 'test3@test.com', password: 'password', password_confirmation: 'password')
+        valid_user = User.authenticate_with_credentials('test3@test.com', 'password')
+        expect(valid_user).to eq(user)
+
+      end
+    end
+
+    context 'when email does not match a record' do
+      it 'should return nil' do
+        user = User.authenticate_with_credentials('test4@test.com', 'password')
+        expect(user).to eq(nil)
+
+      end
+    end
+
+    context 'when password does not match a record' do
+      it 'should return nil' do
+        User.create(first_name: 'John', last_name: 'Snow', email: 'test5@test.com', password: 'password', password_confirmation: 'password')
+        user = User.authenticate_with_credentials('test5@test.com', 'wrongwrong')
+        expect(user).to eq(nil)
+      end
+    end
 
   end
+
 end
-
-
-
-# has_many :reviews
-# has_secure_password
-
-# validates :first_name, presence: true
-# validates :last_name, presence: true
-# validates :email, uniqueness: true
