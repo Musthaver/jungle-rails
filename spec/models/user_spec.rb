@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
 
     let(:user) {User.new(first_name: first_name, last_name: last_name, email: email, password: password, password_confirmation: password_confirmation)}
     let(:user2) {User.new(first_name: first_name, last_name: last_name, email: 'TEST@TEST.com', password: password, password_confirmation: password_confirmation)}
-    let(:user3) {User.new(first_name: first_name, last_name: last_name, email: 'test2@test.com', password: password, password_confirmation: password_confirmation)}
+    let(:user3) {User.new(first_name: first_name, last_name: last_name, email: 'test2@test.com', password: 'hello', password_confirmation: 'hello')}
 
     context 'when all the proper attributes are provided' do
       it 'should be valid' do
@@ -121,6 +121,17 @@ RSpec.describe User, type: :model do
         user.save
         user2.valid?
         expect(user2.errors.full_messages).to include "Email has already been taken"
+      end
+    end
+
+    context 'when a password is not long enough' do
+      it 'should not be valid' do 
+        expect(user3).to_not be_valid
+      end
+
+      it 'reports a validation error on the email' do
+        user3.valid?
+        expect(user3.errors.full_messages).to include "Password is too short (minimum is 8 characters)"
       end
     end
   
