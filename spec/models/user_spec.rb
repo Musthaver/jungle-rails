@@ -165,6 +165,23 @@ RSpec.describe User, type: :model do
       end
     end
 
+    context 'when password or email has spaces' do
+      it 'should be valid' do
+        user = User.create(first_name: 'John', last_name: 'Snow', email: 'test6@test.com', password: 'password', password_confirmation: 'password')
+        valid_user = User.authenticate_with_credentials('   test6@test.com ', '  password  ')
+        expect(valid_user).to eq(user)
+      end
+    end
+
+    context 'when email has caps' do
+      it 'should be valid' do
+        user = User.create(first_name: 'John', last_name: 'Snow', email: 'Test7@test.com', password: 'password', password_confirmation: 'password')
+        valid_user = User.authenticate_with_credentials('TEST7@test.com', 'password')
+        expect(valid_user).to eq(user)
+      end
+    end
+
+
   end
 
 end
