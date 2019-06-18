@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'support/database_cleaner'
 
 RSpec.feature "Visitor navigates to home page", type: :feature, js: true do
 
@@ -21,7 +22,7 @@ RSpec.feature "Visitor navigates to home page", type: :feature, js: true do
     visit root_path
 
     # DEBUG / VERIFY
-    save_screenshot
+    save_screenshot('homepage.png')
 
     expect(page).to have_css 'article.product', count: 10
   end
